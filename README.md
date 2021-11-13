@@ -105,7 +105,8 @@ std_prim_lattice = hcat(Bravais.primitivize(std_lattice, Bravais.centering(sgnum
 - [ ] SeeK-path uses a different standardization for triclinic cell (https://github.com/giovannipizzi/seekpath/tree/fix_transformation_matrix#transformation-matrix)
 - [ ] What happens for an un-distorted supercell?
 - [ ] How to test? (see [test in `SeeK-path`](https://github.com/giovannipizzi/seekpath/blob/7bb5a3c400dcfd2b1e8f17c636e482f776845ced/seekpath/test_paths_hpkot.py))
-- [ ] The conversion between "crystallographic" conventional to primitive cell (Table 3 of HPKOT), and the conversion between "SC standard" conventional to primitive cell (Table 2 of HPKOT) is different (for hR and oA). So, is it okay to just use Spglib.jl for standardization?
+- [v] The conversion between "crystallographic" conventional to primitive cell (Table 3 of HPKOT), and the conversion between "SC standard" conventional to primitive cell (Table 2 of HPKOT) is different (for hR and oA). So, is it okay to just use Spglib.jl for standardization?
+  * This is dealt by `unshuffle_hpkot_setting!` of `Brillouin.jl`. The standard primitive of `Brillouin.jl` is CDML, which is different from standard primitive of `SeeK-path` (Table 3 of HPKOT).
 - [ ] Is "standard conventional" the same for Spglib, Brillouin.jl, and SeeK-Path?
 - [ ] Finish the primitive/standard cell conventions
 
