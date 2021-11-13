@@ -101,7 +101,8 @@ std_prim_lattice = hcat(Bravais.primitivize(std_lattice, Bravais.centering(sgnum
 @assert cell.lattice ≈ dset.std_rotation_matrix * std_prim_lattice * inv(conv_to_prim_matrix) * dset.transformation_matrix'
 ```
 
-**TODO**: Can we be sure that `inv(conv_to_prim_matrix) * dset.transformation_matrix'` is always an integer matrix? If is not, then the transformation is unphysical.
+Note that we have three representations of the same physical system: 1) input lattice, 2) `dset.std_rotation_matrix * dset.std_lattice` + centering, and 3) `dset.std_rotation_matrix * std_prim_lattice`.
+Hence, the conversion between 1 and 3, `inv(conv_to_prim_matrix) * dset.transformation_matrix'`, should just be a integer-valed linear combination of lattice basis vectors. In other words, `inv(conv_to_prim_matrix) * dset.transformation_matrix'` is an integer-valued matrix.
 
 ## Issues
 - [ ] SeeK-path uses a different standardization for triclinic cell (https://github.com/giovannipizzi/seekpath/tree/fix_transformation_matrix#transformation-matrix)
@@ -111,7 +112,6 @@ std_prim_lattice = hcat(Bravais.primitivize(std_lattice, Bravais.centering(sgnum
   * This is dealt by `unshuffle_hpkot_setting!` of `Brillouin.jl`. The standard primitive of `Brillouin.jl` is CDML, which is different from standard primitive of `SeeK-path` (Table 3 of HPKOT).
 - [ ] Is "standard conventional" the same for Spglib, Brillouin.jl, and SeeK-Path?
 - [ ] Finish the primitive/standard cell conventions
-- [ ] Is `inv(conv_to_prim_matrix) * dset.transformation_matrix'` always an integer matrix?
 
 
 ## Links (references)
