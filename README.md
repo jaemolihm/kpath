@@ -112,6 +112,7 @@ Hence, the conversion between 1 and 3, `inv(conv_to_prim_matrix) * dset.transfor
   * This is dealt by `unshuffle_hpkot_setting!` of `Brillouin.jl`. The standard primitive of `Brillouin.jl` is CDML, which is different from standard primitive of `SeeK-path` (Table 3 of HPKOT).
 - [ ] Is "standard conventional" the same for Spglib, Brillouin.jl, and SeeK-Path?
 - [ ] Finish the primitive/standard cell conventions
+- [ ] Is it possible to get `std_rotation_matrix` and `transformation_matrix` only using lattice and space group (without atom positions)?
 
 
 ## Links (references)
