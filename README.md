@@ -84,6 +84,23 @@ spglib_prim_lattice = Spglib.basis_vectors(spglib_prim_cell)
 @assert all(spglib_prim_lattice .≈ bravais_prim_lattice)
 ```
 
+## Conversion between input lattice and standard primitive lattice
+Finally, we can use the two conversions (input cell <-> standard conventional <-> standard primitive) to convert the primitive lattice back to our input lattice.
+```julia
+# cell (input) <- standard conventional
+dset = Spglib.get_dataset(cell)
+sgnum = dset.spacegroup_number
+@assert cell.lattice ≈ dset.std_rotation_matrix * dset.std_lattice * dset.transformation_matrix'
+
+# standard conventional <- standard primitive
+conv_to_prim_matrix = Bravais.primitivebasismatrix(Bravais.centering(sgnum, 3))
+std_prim_lattice = hcat(Bravais.primitivize(std_lattice, Bravais.centering(sgnum, 3))...)
+@assert dset.std_lattice ≈ std_prim_lattice * inv(conv_to_prim_matrix)
+
+# cell (input) <- standard primitive
+@assert cell.lattice ≈ dset.std_rotation_matrix * std_prim_lattice * inv(conv_to_prim_matrix) * dset.transformation_matrix'
+```
+
 ## Issues
 - [ ] SeeK-path uses a different standardization for triclinic cell (https://github.com/giovannipizzi/seekpath/tree/fix_transformation_matrix#transformation-matrix)
 - [ ] What happens for an un-distorted supercell?
